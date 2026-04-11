@@ -1,5 +1,5 @@
-import pytest
-from pages.calculator_page import CalculatorPage
+from calculator_page import CalculatorPage
+from cart_page import CartPage
 
 
 class TestCalculator:
