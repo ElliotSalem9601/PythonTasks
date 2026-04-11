@@ -15,6 +15,7 @@ class TestSlowCalculator:
         """Фикстура для инициализации Chrome драйвера"""
         options = webdriver.ChromeOptions()
         options.add_argument('--ignore-certificate-errors')
+        options.add_argument('--disable-blink-features=AutomationControlled')
         service = Service(ChromeDriverManager().install())
         driver = webdriver.Chrome(service=service, options=options)
         driver.maximize_window()
@@ -23,39 +24,27 @@ class TestSlowCalculator:
 
     def test_calculator_delay(self, driver):
         """Тест калькулятора с задержкой 45 секунд"""
-        # Открыть страницу
         driver.get("https://bonigarcia.dev/selenium-webdriver-java/slow-calculator.html")
-        
         wait = WebDriverWait(driver, 10)
         
-        # В поле ввода #delay ввести значение 45
-        delay_field = wait.until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "#delay"))
-        )
-        delay_field.clear()
-        delay_field.send_keys("45")
+        # Установка задержки
+        delay_input = wait.until(EC.presence_of_element_located((By.ID, "delay")))
+        delay_input.clear()
+        delay_input.send_keys("45")
         
-        # Нажать кнопки: 7 + 8 =
-        buttons = [
-            "7", "add", "8", "equal"
-        ]
-        
-        for button_id in buttons:
-            button = wait.until(
-                EC.element_to_be_clickable((By.CSS_SELECTOR, f"#btn-{button_id}"))
-            )
+        # Нажатие кнопок
+        buttons = ["7", "8", "add", "equal"]
+        for btn in buttons:
+            button = wait.until(EC.element_to_be_clickable((By.XPATH, f"//span[text()='{btn}']")))
             button.click()
         
-        # Ожидание результата с учетом задержки 45 секунд
-        # Используем WebDriverWait с таймаутом 50 секунд (45 + запас)
+        # Ожидание результата
         result_wait = WebDriverWait(driver, 50)
-        result_element = result_wait.until(
-            EC.text_to_be_present_in_element((By.CSS_SELECTOR, ".screen"), "15")
+        screen = result_wait.until(
+            EC.presence_of_element_located((By.CLASS_NAME, "screen"))
         )
         
-        # Проверка результата
-        screen = driver.find_element(By.CSS_SELECTOR, ".screen")
         result_text = screen.text
-        assert result_text == "15", f"Expected '15', but got '{result_text}'"
+        assert result_text == "15", f"Expected '15', got '{result_text}'"
         
-        print(f"Результат: {result_text} (получен через 45 секунд)")
+        print(f"Результат: {result_text}")
