@@ -19,7 +19,7 @@ class CartPage:
             EC.element_to_be_clickable(self.CHECKOUT_BUTTON)
         )
         checkout_button.click()
-        from pages.checkout_page import CheckoutPage
+        from checkout_page import CheckoutPage
         return CheckoutPage(self.driver)
 
     def get_cart_items_count(self):
