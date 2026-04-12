@@ -43,5 +43,5 @@ class InventoryPage:
             EC.element_to_be_clickable(self.CART_ICON)
         )
         cart_icon.click()
-        from pages.cart_page import CartPage
+        from cart_page import CartPage
         return CartPage(self.driver)
