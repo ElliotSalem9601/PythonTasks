@@ -1,5 +1,5 @@
 import pytest
-from pages.login_page import LoginPage
+from login_page import LoginPage
 
 
 class TestShop:
