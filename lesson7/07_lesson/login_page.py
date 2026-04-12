@@ -38,7 +38,7 @@ class LoginPage:
         """Нажать кнопку входа"""
         login_button = self.driver.find_element(*self.LOGIN_BUTTON)
         login_button.click()
-        from pages.inventory_page import InventoryPage
+        from inventory_page import InventoryPage
         return InventoryPage(self.driver)
 
     def login(self, username, password):
