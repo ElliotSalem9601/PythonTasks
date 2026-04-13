@@ -10,11 +10,11 @@ class CalculatorPage:
     DELAY_INPUT = (By.CSS_SELECTOR, "#delay")
     SCREEN = (By.CSS_SELECTOR, ".screen")
     
-    # Кнопки калькулятора
-    BTN_7 = (By.CSS_SELECTOR, "#btn-7")
-    BTN_8 = (By.CSS_SELECTOR, "#btn-8")
-    BTN_ADD = (By.CSS_SELECTOR, "#btn-add")
-    BTN_EQUAL = (By.CSS_SELECTOR, "#btn-equal")
+    # Исправленные локаторы для кнопок (используем точные селекторы)
+    BTN_7 = (By.XPATH, "//span[text()='7']")
+    BTN_8 = (By.XPATH, "//span[text()='8']")
+    BTN_ADD = (By.XPATH, "//span[text()='+']")
+    BTN_EQUAL = (By.XPATH, "//span[text()='=']")
 
     def __init__(self, driver):
         self.driver = driver
